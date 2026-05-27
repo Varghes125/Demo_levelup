@@ -2,7 +2,6 @@
   "name": "life-os-backend",
   "version": "1.0.0",
   "description": "Life OS backend — Vercel serverless functions",
-  "type": "module",
   "scripts": {
     "dev": "vercel dev"
   },
