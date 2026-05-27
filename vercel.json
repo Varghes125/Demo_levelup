@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/tasks/today", "destination": "/api/tasks/today" },
+    { "source": "/api/tasks/complete", "destination": "/api/tasks/complete" },
+    { "source": "/api/domains/:id", "destination": "/api/domains?id=:id" },
+    { "source": "/api/user", "destination": "/api/user" },
+    { "source": "/api/domains", "destination": "/api/domains" },
+    { "source": "/api/pathways", "destination": "/api/pathways" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://levelup-wine-one.vercel.app" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PATCH,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ]
+}

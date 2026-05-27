@@ -1,0 +1,19 @@
+{
+  "name": "life-os-backend",
+  "version": "1.0.0",
+  "description": "Life OS backend — Vercel serverless functions",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "openai": "^4.28.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
