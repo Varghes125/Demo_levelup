@@ -7,8 +7,8 @@
  * Structured to easily swap in auth (e.g. Supabase JWT) later.
  */
 
-import { supabase } from "../lib/supabaseClient.js";
-import { handleCors } from "../utils/cors.js";
+const { supabase } = require("../lib/supabaseClient.js");
+const { handleCors } = require("../utils/cors.js");
 
 // Placeholder: replace with real auth extraction later
 function getUserId(req) {
