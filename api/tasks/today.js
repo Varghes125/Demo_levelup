@@ -1,25 +1,12 @@
-/**
- * /api/tasks/today
- * GET - Generate (or return cached) today's task for the user
- *
- * Flow:
- *  1. Fetch user
- *  2. Fetch domains
- *  3. Score domains
- *  4. If task already exists today → return it
- *  5. Otherwise → generate via OpenAI → store → return
- */
-
-const { supabase } = require("../lib/supabaseClient.js");
-const { handleCors } = require("../utils/cors.js");
-import { getTodayTask } from "../../lib/taskEngine.js";
-
+const { supabase } = require("../../lib/supabaseClient.js");
+const { handleCors } = require("../../utils/cors.js");
+const { getTodayTask } = require("../../lib/taskEngine.js");
 
 function getUserId(req) {
-  return 1; // Replace with real auth later
+  return 1;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (handleCors(req, res)) return;
 
   if (req.method !== "GET") {
@@ -28,7 +15,6 @@ export default async function handler(req, res) {
 
   const userId = getUserId(req);
 
-  // 1. Fetch user
   const { data: user, error: userError } = await supabase
     .from("users")
     .select("*")
@@ -39,7 +25,6 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: "User not found" });
   }
 
-  // 2. Fetch domains
   const { data: domains, error: domainsError } = await supabase
     .from("domains")
     .select("*")
@@ -53,16 +38,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "User has no domains configured" });
   }
 
-  // 3–5. Score + generate/return task
-
-
-try {
-  const task = await getTodayTask(user, domains);
-  return res.status(200).json(task);
-} catch (err) {
-  console.error("[tasks/today] Full error:", err);
-  return res.status(500).json({ 
-    error: err.message,
-    stack: err.stack  // remove this after debugging
-  });
-}
+  try {
+    const task = await getTodayTask(user, domains);
+    return res.status(200).json(task);
+  } catch (err) {
+    console.error("[tasks/today] Full error:", err);
+    return res.status(500).json({
+      error: err.message,
+      stack: err.stack,
+    });
+  }
+};
