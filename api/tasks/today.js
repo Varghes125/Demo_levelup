@@ -10,9 +10,10 @@
  *  5. Otherwise → generate via OpenAI → store → return
  */
 
-import { supabase } from "../../lib/supabaseClient.js";
+const { supabase } = require("../lib/supabaseClient.js");
+const { handleCors } = require("../utils/cors.js");
 import { getTodayTask } from "../../lib/taskEngine.js";
-import { handleCors } from "../../utils/cors.js";
+
 
 function getUserId(req) {
   return 1; // Replace with real auth later
