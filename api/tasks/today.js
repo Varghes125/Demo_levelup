@@ -54,14 +54,7 @@ export default async function handler(req, res) {
   }
 
   // 3–5. Score + generate/return task
-  try {
-    const task = await getTodayTask(user, domains);
-    return res.status(200).json(task);
-  } catch (err) {
-    console.error("[tasks/today] Error:", err);
-    return res.status(500).json({ error: err.message || "Failed to generate task" });
-  }
-}
+
 
 try {
   const task = await getTodayTask(user, domains);
