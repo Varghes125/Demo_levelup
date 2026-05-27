@@ -10,8 +10,8 @@
  *  3. Update user: xp += task.xp, update streak
  */
 
-import { supabase } from "../../lib/supabaseClient.js";
-import { handleCors } from "../../utils/cors.js";
+const { supabase } = require("../lib/supabaseClient.js");
+const { handleCors } = require("../utils/cors.js");
 
 function getUserId(req) {
   return 1; // Replace with real auth later
