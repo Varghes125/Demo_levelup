@@ -1,20 +1,8 @@
-/**
- * /api/tasks/complete
- * POST - Mark a task as complete and update user + domain stats
- *
- * Body: { taskId: number }
- *
- * Logic:
- *  1. Mark task completed
- *  2. Update domain: lastDone = today, streak++
- *  3. Update user: xp += task.xp, update streak
- */
-
-const { supabase } = require("../lib/supabaseClient.js");
-const { handleCors } = require("../utils/cors.js");
+const { supabase } = require("../../lib/supabaseClient.js");
+const { handleCors } = require("../../utils/cors.js");
 
 function getUserId(req) {
-  return 1; // Replace with real auth later
+  return 1;
 }
 
 function isYesterday(dateStr) {
@@ -24,7 +12,7 @@ function isYesterday(dateStr) {
   return dateStr === yesterday.toISOString().split("T")[0];
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (handleCors(req, res)) return;
 
   if (req.method !== "POST") {
@@ -98,8 +86,8 @@ export default async function handler(req, res) {
     const userStreak = isYesterday(user.last_active_date)
       ? (user.streak || 0) + 1
       : user.last_active_date === today
-      ? user.streak // same day, no change
-      : 1; // streak broken
+      ? user.streak
+      : 1;
 
     const newXp = (user.xp || 0) + (task.xp || 0);
 
@@ -119,4 +107,4 @@ export default async function handler(req, res) {
     xpAwarded: task.xp || 0,
     message: `Task completed! +${task.xp || 0} XP`,
   });
-}
+};
